@@ -51,75 +51,73 @@ def main():
         st.error(f"Ошибка загрузки модели: {e}")
         return
     
-    # Создаем две колонки
-    st.header("📊 Введите параметры автомобиля")
-    
-    
+    with st.form("car_form"):
+        st.header("📊 Введите параметры автомобиля")
+                
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.subheader("Основные характеристики")
+            vehicle_manufacturer = st.selectbox(
+                "Производитель",
+                ['HYUNDAI', 'TOYOTA', 'BMW', 'MAZDA', 'NISSAN', 'DODGE', 'MINI',
+                'CHEVROLET', 'MITSUBISHI', 'MERCEDES-BENZ', 'LEXUS', 'VOLKSWAGEN',
+                'JEEP', 'HONDA', 'FORD', 'OPEL', 'AUDI', 'KIA', 'SUBARU', 'FIAT',
+                'LAND ROVER', 'VAZ', 'PORSCHE', 'INFINITI', 'SSANGYONG',
+                'ASTON MARTIN', 'JAGUAR', 'SUZUKI', 'LINCOLN', 'CHRYSLER', 'SKODA',
+                'VOLVO', 'MG', 'BUICK', 'CADILLAC', 'GREATWALL', 'DAIHATSU',
+                'SEAT', 'RENAULT', 'MERCURY', 'FERRARI']
+            )
             
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.subheader("Основные характеристики")
-        vehicle_manufacturer = st.selectbox(
-            "Производитель",
-            ['HYUNDAI', 'TOYOTA', 'BMW', 'MAZDA', 'NISSAN', 'DODGE', 'MINI',
-            'CHEVROLET', 'MITSUBISHI', 'MERCEDES-BENZ', 'LEXUS', 'VOLKSWAGEN',
-            'JEEP', 'HONDA', 'FORD', 'OPEL', 'AUDI', 'KIA', 'SUBARU', 'FIAT',
-            'LAND ROVER', 'VAZ', 'PORSCHE', 'INFINITI', 'SSANGYONG',
-            'ASTON MARTIN', 'JAGUAR', 'SUZUKI', 'LINCOLN', 'CHRYSLER', 'SKODA',
-            'VOLVO', 'MG', 'BUICK', 'CADILLAC', 'GREATWALL', 'DAIHATSU',
-            'SEAT', 'RENAULT', 'MERCURY', 'FERRARI']
-        )
+            vehicle_year = st.number_input(
+                "Год выпуска",
+                min_value=1940,
+                max_value=datetime.now().year,
+                value=2018
+            )
+            
+            current_mileage = st.number_input(
+                "Пробег (км)",
+                min_value=0,
+                max_value=500000,
+                value=50000
+            )
         
-        vehicle_year = st.number_input(
-            "Год выпуска",
-            min_value=1940,
-            max_value=datetime.now().year,
-            value=2018
-        )
+        with col2:
+                            
+            vehicle_gearbox_type = st.selectbox(
+                "Трансмиссия",
+                ['Tiptronic', 'Automatic', 'Manual', 'Variator']
+            )
         
-        current_mileage = st.number_input(
-            "Пробег (км)",
-            min_value=0,
-            max_value=500000,
-            value=50000
-        )
-    
-    with col2:
-                        
-        vehicle_gearbox_type = st.selectbox(
-            "Трансмиссия",
-            ['Tiptronic', 'Automatic', 'Manual', 'Variator']
-        )
-    
-        doors_cnt = st.selectbox(
-            "Количество дверей, 
-            [' 2/3', ' 4/5', ' >5']
-        )
-        
-        wheels = st.selectbox(
-            "Привод",
-            '  Left wheel  ', '  Right-hand drive   ']
-        )
+            doors_cnt = st.selectbox(
+                "Количество дверей", 
+                [' 2/3', ' 4/5', ' >5']
+            )
+            
+            wheels = st.selectbox(
+                "Привод",
+                ['Left wheel', 'Right-hand drive']
+            )
 
-    with col3:  
-        st.subheader("Внешний вид")  
-        car_leather_interior = st.selectbox(
-            "Кожаный салон",
-            [0, 1],
-            format_func=lambda x: "Да" if x == 1 else "Нет"
-        )
-    
-        vehicle_color = st.selectbox(
-            "Цвет кузова",
-            [' Silver ', ' White ', ' Grey ', ' Black ', ' Carnelian red ',
-            ' Blue ', ' Sky blue ', ' Golden ', ' Brown ', ' Red ', ' Beige ',
-            ' Green ', ' Pink ', ' Orange ', ' Yellow ', ' Purple ']
-            )      
-            
-            
-    # Кнопка предсказания
-    submitted = st.form_submit_button("🎯 Предсказать стоимость")
+        with col3:  
+            st.subheader("Внешний вид")  
+            car_leather_interior = st.selectbox(
+                "Кожаный салон",
+                [0, 1],
+                format_func=lambda x: "Да" if x == 1 else "Нет"
+            )
+        
+            vehicle_color = st.selectbox(
+                "Цвет кузова",
+                [' Silver ', ' White ', ' Grey ', ' Black ', ' Carnelian red ',
+                ' Blue ', ' Sky blue ', ' Golden ', ' Brown ', ' Red ', ' Beige ',
+                ' Green ', ' Pink ', ' Orange ', ' Yellow ', ' Purple ']
+                )      
+                
+                
+        # Кнопка предсказания
+        submitted = st.form_submit_button("🎯 Предсказать стоимость")
     
     with col2:
         st.header("💡 Информация")
